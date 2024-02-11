@@ -3,14 +3,14 @@ import { sepolia } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 
-const config = createConfig(
+export const config = createConfig(
   getDefaultConfig({
     // Your dApps chains
     chains: [sepolia],
   
 
     // Required API Keys
-    walletConnectProjectId: process.env.VITE_ALCHEMY_ID,
+    walletConnectProjectId: import.meta.env.VITE_ALCHEMY_ID,
 
     // Required App Info
     appName: "Your App Name",

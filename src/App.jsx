@@ -11,6 +11,7 @@ function App() {
         <AppLayout>
           <Home />
         </AppLayout>
+        <ConnectKitButton />
       </ConnectKitProvider>
     </WagmiConfig>
   )

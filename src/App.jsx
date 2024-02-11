@@ -1,4 +1,4 @@
-import { ConnectKitProvider } from 'connectkit'
+import { ConnectKitButton, ConnectKitProvider } from 'connectkit'
 import { WagmiConfig } from 'wagmi'
 import { AppLayout } from './components/ui/layouts'
 import { config } from './config/wagmi'

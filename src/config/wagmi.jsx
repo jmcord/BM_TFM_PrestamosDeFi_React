@@ -7,23 +7,15 @@ const config = createConfig(
   getDefaultConfig({
     // Your dApps chains
     chains: [sepolia],
-    transports: {
-      // RPC URL for each chain
-      [mainnet.id]: http(
-        `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`,
-      ),
-    },
+  
 
     // Required API Keys
-    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+    walletConnectProjectId: process.env.VITE_ALCHEMY_ID,
 
     // Required App Info
     appName: "Your App Name",
 
-    // Optional App Info
-    appDescription: "Your App Description",
-    appUrl: "https://family.co", // your app's url
-    appIcon: "https://family.co/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
+
   }),
 );
 

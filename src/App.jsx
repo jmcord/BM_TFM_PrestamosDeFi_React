@@ -1,19 +1,22 @@
 import { ConnectKitButton, ConnectKitProvider } from 'connectkit'
-import { WagmiConfig } from 'wagmi'
 import { AppLayout } from './components/ui/layouts'
 import { config } from './config/wagmi'
 import { Home } from './pages'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
 
 function App() {
   return (
-    <WagmiConfig config={config}>
-      <ConnectKitProvider mode="light">
+    <WagmiProvider config={config}>
+      <QueryClientProvider>
+        <ConnectKitProvider>
         <AppLayout>
           <Home />
         </AppLayout>
         <ConnectKitButton />
-      </ConnectKitProvider>
-    </WagmiConfig>
+        </ConnectKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   )
 }
 

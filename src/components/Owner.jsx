@@ -6,7 +6,7 @@ export default function Owner() {
   const result = useContractRead({
     abi: blockmakerTokenABI,
     address: import.meta.env.VITE_CONTRACT_ADDRESS, 
-    functionName: 'owner'
+    functionName: 'socioPrincipal'
   });
 
   console.log('Resultado lectura owner', result);

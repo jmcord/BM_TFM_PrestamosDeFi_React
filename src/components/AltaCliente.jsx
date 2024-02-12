@@ -57,7 +57,7 @@ function AltaCliente({ empleadoPrestamista }) {
       <form className="grid gap-4">
         <TextInput type="text" placeholder="Dirección del nuevo cliente" onChange={(e) => setNuevoCliente(e.target.value)} value={nuevoCliente} />
         {error && <p className="text-red-500">{error}</p>}
-        <Button disabled={!write || isTransactionLoading} onClick={handleAltaCliente} isLoading={isTransactionLoading}>
+        <Button disabled={!write || isTransactionLoading || isTransactionSuccess === undefined || isTransactionError === undefined} onClick={handleAltaCliente} isLoading={isTransactionLoading}>
           {isTransactionLoading ? 'Dando de alta cliente...' : 'Dar de alta cliente'}
         </Button>
       </form>

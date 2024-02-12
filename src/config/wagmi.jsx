@@ -10,8 +10,8 @@ export const config = createConfig(
   
 
     // Required API Keys
-    walletConnectProjectId: import.meta.env.VITE_ALCHEMY_ID,
-
+    walletConnectProjectId: import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID,
+    alchemyId: import.meta.env.VITE_ALCHEMY_ID,
     // Required App Info
     appName: "Your App Name",
 

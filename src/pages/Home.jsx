@@ -1,4 +1,4 @@
-import { PrestamoDetail, Owner} from '../components'
+import { PrestamoDetail, Owner, AltaCliente} from '../components'
 import AltaPrestamista2 from '../components/AltaPrestamista2'
 
 export default function Home() {
@@ -8,6 +8,7 @@ export default function Home() {
 
       <Owner />
       <AltaPrestamista2 />
+      <AltaCliente />
  
     </section>
   )

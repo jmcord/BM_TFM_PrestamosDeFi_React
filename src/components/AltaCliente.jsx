@@ -37,8 +37,8 @@ function AltaCliente({ empleadoPrestamista }) {
     setError('');
     write();
   };
-
   useEffect(() => {
+    console.log('Valor de write:', write);
     if (isTransactionSuccess) {
       setNuevoCliente('');
       console.log('Transacción Completada!');
@@ -46,7 +46,9 @@ function AltaCliente({ empleadoPrestamista }) {
     if (isTransactionError) {
       console.log('Transacción Fallida!');
     }
-  }, [isTransactionSuccess, isTransactionError]);
+  }, [write, isTransactionSuccess, isTransactionError]);
+
+  console.log('Dirección del nuevo cliente:', nuevoCliente);
 
   return (
     <section className="bg-white p-4 border shadow rounded-md">

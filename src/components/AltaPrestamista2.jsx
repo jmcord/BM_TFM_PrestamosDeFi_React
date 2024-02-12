@@ -1,54 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextInput, Title } from './ui';
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { blockmakerTokenABI } from '../contracts/ABIs'
 
 function AltaPrestamista2({ }) {
   const [nuevoPrestamista, setNuevoPrestamista] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+
 
   const { config } = useWriteContract({
     address: import.meta.env.VITE_CONTRACT_ADDRESS,
     abi: blockmakerTokenABI,
     functionName: 'altaPrestamista',
-    args: [nuevoPrestamista],
-    signer: import.meta.env.socioPrincipal
+    args: [nuevoPrestamista]
+
   });
 
   const { data: writeData, write } = useWriteContract(config);
 
-  const { isSuccess, isError } = useWaitForTransactionReceipt({
+  const {
+    isLoading: isTransactionLoading,
+    isSuccess: isTransactionSuccess,
+    isError: isTransactionError
+  } = useWaitForTransactionReceipt({
     hash: writeData?.hash
   });
 
-  useState(() => {
-    if (isSuccess) {
-      setSuccessMessage('¡Alta de prestamista exitosa!');
-      setIsLoading(false);
-    } else if (isError) {
-      setErrorMessage('Error al dar de alta al prestamista');
-      setIsLoading(false);
-    }
-  }, [isSuccess, isError]);
-
-  const handleAltaPrestamista = () => {
-    setIsLoading(true);
-    write();
+  const handleAltaPrestamista = (event) => {
+    setNuevoPrestamista(event.target.value);
   };
+
+  useEffect(() => {
+    if (isTransactionSuccess) {
+      setNuevoPrestamista('');
+      console.log('Transacción Completada!');
+    }
+    if (isTransactionError) {
+      console.log('Transacción Fallida!');
+    }
+  }, [isTransactionSuccess, isTransactionError]);
 
   return (
     <section className="bg-white p-4 border shadow rounded-md">
-      <Title>Alta de Prestamista</Title>
-      <form>
-        <TextInput type="text" placeholder="Dirección del nuevo prestamista" value={nuevoPrestamista} disabled onChange={(e) => setNuevoPrestamista(e.target.value)}/>
-        <Button disabled={isLoading} onClick={handleAltaPrestamista}>
-          {isLoading ? 'Cargando...' : 'Dar de alta prestamista'}
+      <Title>TransferForm</Title>
+
+      <form className="grid gap-4">
+        <TextInput type="text" placeholder="Address" onChange={handleAltaPrestamista} />
+        <Button disabled={!write || isTransactionLoading} onClick={() => write?.()} isLoading={isTransactionLoading}>
+          {isTransactionLoading ? 'Dando de alta prestamista...' : 'Dar de alta prestamista'}
         </Button>
       </form>
-      {successMessage && <p>{successMessage}</p>}
-      {errorMessage && <p>{errorMessage}</p>}
     </section>
   );
 }

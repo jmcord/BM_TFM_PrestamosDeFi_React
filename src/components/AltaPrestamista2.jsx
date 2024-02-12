@@ -56,7 +56,7 @@ function AltaPrestamista2({ socioPrincipal }) {
       <form className="grid gap-4">
         <TextInput type="text" placeholder="Dirección del nuevo prestamista" onChange={(e) => setNuevoPrestamista(e.target.value)} value={nuevoPrestamista} />
         {error && <p className="text-red-500">{error}</p>}
-        <Button disabled={!write || isTransactionLoading} onClick={handleAltaPrestamista} isLoading={isTransactionLoading}>
+        <Button disabled={!write || isTransactionLoading || isTransactionSuccess === undefined || isTransactionError === undefined} onClick={handleAltaPrestamista} isLoading={isTransactionLoading}>
           {isTransactionLoading ? 'Dando de alta prestamista...' : 'Dar de alta prestamista'}
         </Button>
       </form>

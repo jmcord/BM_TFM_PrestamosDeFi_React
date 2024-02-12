@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useContractWrite, useWaitForTransactionReceipt } from 'wagmi';
 
-function AltaPrestamista({ contractAddress, socioPrincipal, prestamistaAddress }) {
+function AltaPrestamista({ socioPrincipal, prestamistaAddress }) {
   // Estado para manejar el mensaje de éxito o error
   const [message, setMessage] = useState('');
 
   // Preparar la escritura de la transacción
   const { data: writeData, write } = useContractWrite({
-    address: contractAddress,
+    address: import.meta.env.VITE_CONTRACT_ADDRESS,
     functionName: 'altaPrestamista',
     args: [prestamistaAddress],
     signer: socioPrincipal // El signatario es el socio principal

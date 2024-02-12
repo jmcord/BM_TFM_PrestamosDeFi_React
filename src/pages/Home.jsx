@@ -7,7 +7,7 @@ export default function Home() {
       <h1>Prestamos DeFi</h1>
 
       <Owner />
-
+      <AltaPrestamista />
  
     </section>
   )

@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextInput, Title } from './ui';
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
-import { blockmakerTokenABI } from '../contracts/ABIs'
+import { blockmakerTokenABI } from '../contracts/ABIs';
 
-function AltaPrestamista2({ }) {
+
+function AltaPrestamista2({ socioPrincipal }) {
   const [nuevoPrestamista, setNuevoPrestamista] = useState('');
+  const [error, setError] = useState('');
 
+  const isValidAddress = (address) => {
+    return /^(0x)?[0-9a-f]{40}$/i.test(address);
+  };
 
   const { config } = useWriteContract({
     address: import.meta.env.VITE_CONTRACT_ADDRESS,
     abi: blockmakerTokenABI,
     functionName: 'altaPrestamista',
-    args: [nuevoPrestamista]
-
+    args: [nuevoPrestamista],
+    signer: socioPrincipal // El socio principal firma la transacción
   });
 
   const { data: writeData, write } = useWriteContract(config);
@@ -25,8 +30,13 @@ function AltaPrestamista2({ }) {
     hash: writeData?.hash
   });
 
-  const handleAltaPrestamista = (event) => {
-    setNuevoPrestamista(event.target.value);
+  const handleAltaPrestamista = () => {
+    if (!isValidAddress(nuevoPrestamista)) {
+      setError('Dirección Ethereum no válida');
+      return;
+    }
+    setError('');
+    write();
   };
 
   useEffect(() => {
@@ -44,8 +54,9 @@ function AltaPrestamista2({ }) {
       <Title>TransferForm</Title>
 
       <form className="grid gap-4">
-        <TextInput type="text" placeholder="Address" onChange={handleAltaPrestamista} />
-        <Button disabled={!write || isTransactionLoading} onClick={() => write?.()} isLoading={isTransactionLoading}>
+        <TextInput type="text" placeholder="Dirección del nuevo prestamista" onChange={(e) => setNuevoPrestamista(e.target.value)} value={nuevoPrestamista} />
+        {error && <p className="text-red-500">{error}</p>}
+        <Button disabled={!write || isTransactionLoading} onClick={handleAltaPrestamista} isLoading={isTransactionLoading}>
           {isTransactionLoading ? 'Dando de alta prestamista...' : 'Dar de alta prestamista'}
         </Button>
       </form>

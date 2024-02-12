@@ -1,4 +1,5 @@
-import {Header, Footer, Owner} from '../components'
+import { PrestamoDetail, Owner} from '../components'
+import AltaPrestamista from '../components/AltaPrestamista'
 
 export default function Home() {
   return (
@@ -7,6 +8,7 @@ export default function Home() {
 
       <Owner />
 
+ 
     </section>
   )
 }

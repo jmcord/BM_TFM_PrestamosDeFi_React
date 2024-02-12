@@ -1,5 +1,5 @@
 import { PrestamoDetail, Owner} from '../components'
-import AltaPrestamista from '../components/AltaPrestamista'
+import AltaPrestamista2 from '../components/AltaPrestamista2'
 
 export default function Home() {
   return (
@@ -7,7 +7,7 @@ export default function Home() {
       <h1>Prestamos DeFi</h1>
 
       <Owner />
-      <AltaPrestamista />
+      <AltaPrestamista2 />
  
     </section>
   )

@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { Button, TextInput, Title } from './ui';
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { blockmakerTokenABI } from '../contracts/ABIs'
 
-
-function AltaPrestamista({ socioPrincipal, nuevoPrestamista }) {
+function AltaPrestamista2({ }) {
+  const [nuevoPrestamista, setNuevoPrestamista] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const { config } = useWriteContract({
     address: import.meta.env.VITE_CONTRACT_ADDRESS,
+    abi: blockmakerTokenABI,
     functionName: 'altaPrestamista',
     args: [nuevoPrestamista],
-    signer: socioPrincipal
+    signer: import.meta.env.socioPrincipal
   });
 
   const { data: writeData, write } = useWriteContract(config);
@@ -40,7 +42,7 @@ function AltaPrestamista({ socioPrincipal, nuevoPrestamista }) {
     <section className="bg-white p-4 border shadow rounded-md">
       <Title>Alta de Prestamista</Title>
       <form>
-        <TextInput type="text" placeholder="Dirección del nuevo prestamista" value={nuevoPrestamista} disabled />
+        <TextInput type="text" placeholder="Dirección del nuevo prestamista" value={nuevoPrestamista} disabled onChange={(e) => setNuevoPrestamista(e.target.value)}/>
         <Button disabled={isLoading} onClick={handleAltaPrestamista}>
           {isLoading ? 'Cargando...' : 'Dar de alta prestamista'}
         </Button>
@@ -51,4 +53,4 @@ function AltaPrestamista({ socioPrincipal, nuevoPrestamista }) {
   );
 }
 
-export default AltaPrestamista;
+export default AltaPrestamista2;
